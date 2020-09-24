@@ -1,0 +1,1 @@
+# scotch-go-rest-api
