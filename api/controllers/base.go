@@ -47,6 +47,15 @@ func (a *App) initializeRouter() {
 	a.Router.HandleFunc("/register", a.UserSignUp).Methods("POST")
 	a.Router.HandleFunc("/login", a.Login).Methods("POST")
 
+	s := a.Router.PathPrefix("/api").Subrouter()
+	s.Use(middlewares.AuthJwtToken)
+
+	// s.HandleFunc("/users", a.GetAllUsers).Methods("GET")
+	s.HandleFunc("/venues", a.CreateVenue).Methods("POST")
+	s.HandleFunc("/venues", a.GetVenues).Methods("GET")
+	s.HandleFunc("/venue/{id:[0-9]+}", a.UpdateVenue).Methods("PUT")
+	s.HandleFunc("/venue/{id:[0-9]+}", a.DeleteVenue).Methods("POST")
+
 }
 
 func (a *App) RunServer() {

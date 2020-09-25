@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/badoux/checkmail"
@@ -22,12 +23,15 @@ type User struct {
 // hash the password from user input
 func HashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	fmt.Println(string(bytes))
 	return string(bytes), err
 }
 
 // check password hash and password from user input
 func CheckPasswordHash(password, hash string) error {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+
+	fmt.Println(err, "er")
 
 	if err != nil {
 		return errors.New("password incorrect")
